@@ -23,13 +23,19 @@ module tb ();
   wire [7:0] uio_out;
   wire [7:0] uio_oe;
 
+`ifdef GL_TEST
+  // Define wires for Power and Ground (Required for inout ports in Gate-Level)
+  wire VPWR = 1'b1;
+  wire VGND = 1'b0;
+`endif
+
   // Instantiating our custom ALU module!
   tt_um_alu user_project (
 
       // Include power ports for the Gate Level test:
 `ifdef GL_TEST
-      .VPWR(1'b1),
-      .VGND(1'b0),
+      .VPWR(VPWR), // Connected via wire
+      .VGND(VGND), // Connected via wire
 `endif
 
       .ui_in  (ui_in),    // Dedicated inputs
