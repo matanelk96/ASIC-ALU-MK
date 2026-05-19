@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 `default_nettype none
-`timescale 1ns / 1ps
+
 
 module tt_um_alu (
     input  wire [7:0] ui_in,    // Dedicated inputs (Data Bus)
