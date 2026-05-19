@@ -1,5 +1,6 @@
 # Tiny Tapeout project information
 project: 
+  urn : "https://github.com/matanelk96/ASIC-ALU-MK"
   title: "8-bit Interactive ALU"
   author: "Matanel Kadosh"
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
