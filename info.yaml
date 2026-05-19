@@ -3,7 +3,7 @@
 --- 
 # TinyTapeout project information
 project: ALU
-  urn: "github.com/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME"
+  urn: "github.com/matanelk96/ASIC-ALU-MK"
   title: "8-bit Interactive ALU"
   author: "Matanel Kadosh"
   description: "An 8-bit Arithmetic Logic Unit with internal registers and multiplexed output for result/carry."
