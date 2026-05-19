@@ -16,7 +16,7 @@ project:
   
   # The source files
   source_files:
-    - "tt_um_alu.v"
+    - "project.v"
 
 pinout:
   # PMOD 1: ui_in (8-bit Input Bus)
