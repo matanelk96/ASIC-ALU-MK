@@ -14,11 +14,11 @@ def expected_alu(op, a, b):
     elif op == 0x2: res = a + b
     elif op == 0x3: res = a - b
     elif op == 0x4: res = a ^ b
-    elif op == 0x5: res = ~(a & b)
-    elif op == 0x6: res = ~(a | b)
+    elif op == 0x5: res = ~(a & b) & 0xFF  # FIXED: Cut Python's negative sign to 8 bits
+    elif op == 0x6: res = ~(a | b) & 0xFF  # FIXED: Cut Python's negative sign to 8 bits
     elif op == 0x7: res = a << 1
     elif op == 0x8: res = a >> 1
-    elif op == 0x9: res = ~a
+    elif op == 0x9: res = (~a) & 0xFF      # FIXED: Cut Python's negative sign to 8 bits
     elif op == 0xA: res = (~a & 0xFF) + 1  # 2's complement
     else: res = 0
     
@@ -39,16 +39,16 @@ async def load_registers(dut, a_val, b_val):
     # Load Register A
     dut.ui_in.value = a_val
     set_control(dut, load_a=1)
-    await ClockCycles(dut.clk, 2) # Wait 2 cycles to ensure latching
+    await ClockCycles(dut.clk, 2)
     set_control(dut, load_a=0)
-    await ClockCycles(dut.clk, 1) # Buffer cycle
+    await ClockCycles(dut.clk, 1)
 
     # Load Register B
     dut.ui_in.value = b_val
     set_control(dut, load_b=1)
-    await ClockCycles(dut.clk, 2) # Wait 2 cycles
+    await ClockCycles(dut.clk, 2)
     set_control(dut, load_b=0)
-    await ClockCycles(dut.clk, 1) # Buffer cycle
+    await ClockCycles(dut.clk, 1)
 
 # ==========================================
 # 3. Main Comprehensive Testbench
@@ -57,7 +57,7 @@ async def load_registers(dut, a_val, b_val):
 async def test_alu_comprehensive(dut):
     dut._log.info("🚀 Starting Comprehensive ALU Testbench...")
 
-    # Start a 10MHz background clock (Fixed warning 'unit' instead of 'units')
+    # Start a 10MHz background clock
     clock = Clock(dut.clk, 100, unit="ns")
     cocotb.start_soon(clock.start())
 
@@ -67,7 +67,7 @@ async def test_alu_comprehensive(dut):
     dut.ui_in.value = 0
     set_control(dut, reset=0) 
     dut.rst_n.value = 0 
-    await ClockCycles(dut.clk, 3) # Generous reset time
+    await ClockCycles(dut.clk, 3) 
     dut.rst_n.value = 1 
     await ClockCycles(dut.clk, 3)
 
@@ -94,7 +94,7 @@ async def test_alu_comprehensive(dut):
             
             # Request the result from hardware
             set_control(dut, opcode=opcode, out_sel=0)
-            await ClockCycles(dut.clk, 2) # Give combinational logic and registers time to settle
+            await ClockCycles(dut.clk, 2) 
             
             hw_result = int(dut.uo_out.value)
             
