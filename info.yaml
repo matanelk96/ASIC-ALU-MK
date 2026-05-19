@@ -1,11 +1,8 @@
 # Tiny Tapeout project information
-
---- 
-# TinyTapeout project information
-project: ALU
-  urn: "github.com/matanelk96/ASIC-ALU-MK"
+project: 
   title: "8-bit Interactive ALU"
   author: "Matanel Kadosh"
+  discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
   description: "An 8-bit Arithmetic Logic Unit with internal registers and multiplexed output for result/carry."
   language: "Verilog"
   clock_hz: 10000000 # 10 MHz
